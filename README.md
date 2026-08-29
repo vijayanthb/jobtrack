@@ -1,5 +1,7 @@
 # jobtrack
 
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)
+
 A small command-line tool for tracking job applications and interview stages,
 backed by Postgres. Built to actually use during my own job search, not just
 as a demo.
@@ -30,7 +32,7 @@ glance — without leaving the terminal.
 
 ## Setup
 
-```bash
+\`\`\`bash
 # 1. Install dependencies
 npm install
 
@@ -47,18 +49,18 @@ npm run migrate
 
 # 5. You're ready
 node dist/cli.js --help
-```
+\`\`\`
 
 Optionally link it as a global command:
 
-```bash
+\`\`\`bash
 npm link
 jobtrack --help
-```
+\`\`\`
 
 ## Usage
 
-```bash
+\`\`\`bash
 # Add an application
 jobtrack add -c "Acme Corp" -r "Senior Backend Engineer" -s applied
 
@@ -79,7 +81,7 @@ jobtrack stats
 
 # Remove an application
 jobtrack remove 3
-```
+\`\`\`
 
 ## Schema
 
@@ -89,7 +91,7 @@ a Postgres trigger). See `src/db/schema.sql`.
 
 ## Project structure
 
-```
+\`\`\`
 src/
   cli.ts              entrypoint, wires commander to commands
   types.ts            shared types and the Stage enum
@@ -99,7 +101,7 @@ src/
     schema.sql         table definition + trigger
     migrate.ts         migration runner
     applications.ts    data access layer
-```
+\`\`\`
 
 ## Possible next steps
 
