@@ -1,0 +1,35 @@
+{
+  "name": "jobtrack",
+  "version": "1.0.0",
+  "description": "A small CLI to track job applications and interview stages, backed by Postgres.",
+  "type": "module",
+  "bin": {
+    "jobtrack": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && cp src/db/schema.sql dist/db/schema.sql",
+    "start": "node dist/cli.js",
+    "dev": "tsx src/cli.ts",
+    "migrate": "node dist/db/migrate.js",
+    "test": "npm run build && node --test dist/test/*.test.js"
+  },
+  "keywords": ["cli", "job-search", "postgres", "typescript"],
+  "author": "Vijayanth Bonda",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.5",
+    "pg": "^8.13.0",
+    "cli-table3": "^0.6.5",
+    "chalk": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "@types/pg": "^8.11.10",
+    "typescript": "^5.6.3",
+    "tsx": "^4.19.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
