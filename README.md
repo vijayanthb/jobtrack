@@ -22,6 +22,7 @@ glance — without leaving the terminal.
 - `stats` — see counts and percentages across the funnel (applied →
   phone_screen → technical → onsite → offer / rejected / withdrawn)
 - `ui` — interactive terminal dashboard (arrow keys, live table, forms, stats view)
+- Web dashboard — a browser UI (React + Express API) on top of the same Postgres data
 
 ## Tech stack
 
@@ -30,11 +31,12 @@ glance — without leaving the terminal.
 - `commander` for the CLI interface
 - `cli-table3` + `chalk` for terminal output
 - `ink` (React for CLIs) for the interactive terminal UI
+- `express` API + React/Vite frontend for the web dashboard
 - Docker Compose for local Postgres
 
 ## Setup
 
-\`\`\`bash
+```bash
 # 1. Install dependencies
 npm install
 
@@ -51,18 +53,18 @@ npm run migrate
 
 # 5. You're ready
 node dist/cli.js --help
-\`\`\`
+```
 
 Optionally link it as a global command:
 
-\`\`\`bash
+```bash
 npm link
 jobtrack --help
-\`\`\`
+```
 
 ## Usage
 
-\`\`\`bash
+```bash
 # Add an application
 jobtrack add -c "Acme Corp" -r "Senior Backend Engineer" -s applied
 
@@ -83,15 +85,15 @@ jobtrack stats
 
 # Remove an application
 jobtrack remove 3
-\`\`\`
+```
 
 ## Interactive UI
 
 For a full-screen dashboard instead of one-off commands:
 
-\`\`\`bash
+```bash
 jobtrack ui
-\`\`\`
+```
 
 - `↑` / `↓` — select a row
 - `a` — add a new application (guided form)
@@ -101,6 +103,24 @@ jobtrack ui
 - `r` — refresh
 - `q` — quit
 
+## Web dashboard
+
+A browser dashboard is also available — same Postgres data as the CLI/TUI,
+just a different way to look at and edit it.
+
+\`\`\`bash
+# Terminal 1: start the API (make sure you've already run npm run build)
+npm run server
+
+# Terminal 2: start the web frontend
+cd web
+npm install
+npm run dev
+\`\`\`
+
+Then open http://localhost:5173 — the dev server proxies `/api/*` requests
+to the Express API on port 4000.
+
 ## Schema
 
 Single `applications` table: `id`, `company`, `role`, `stage`, `applied_date`,
@@ -109,26 +129,31 @@ a Postgres trigger). See `src/db/schema.sql`.
 
 ## Project structure
 
-\`\`\`
+```
 src/
   cli.ts              entrypoint, wires commander to commands
   types.ts            shared types and the Stage enum
   validate.ts          shared stage-validation helper
   commands/           one file per CLI command
   ui/                  interactive terminal dashboard (Ink/React)
+  server/              Express API for the web dashboard
   db/
     pool.ts           pg connection pool
     schema.sql         table definition + trigger
     migrate.ts         migration runner
     applications.ts    data access layer
   test/                unit tests
-\`\`\`
+web/                    React/Vite web dashboard (separate npm project)
+  src/
+    App.tsx             main app, data fetching + state
+    api.ts               fetch wrapper for the Express API
+    components/          StatCards, ApplicationsTable, modals
+```
 
 ## Possible next steps
 
 - `jobtrack reminders` — surface applications with an upcoming `next_step_date`
 - CSV export
-- Local web dashboard (browser UI on top of the same Postgres data)
 - Swap `pg` for an interface that also supports SQLite, for zero-setup trials
 
 ## License
