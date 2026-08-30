@@ -34,7 +34,7 @@ glance — without leaving the terminal.
 
 ## Setup
 
-```bash
+\`\`\`bash
 # 1. Install dependencies
 npm install
 
@@ -51,18 +51,18 @@ npm run migrate
 
 # 5. You're ready
 node dist/cli.js --help
-```
+\`\`\`
 
 Optionally link it as a global command:
 
-```bash
+\`\`\`bash
 npm link
 jobtrack --help
-```
+\`\`\`
 
 ## Usage
 
-```bash
+\`\`\`bash
 # Add an application
 jobtrack add -c "Acme Corp" -r "Senior Backend Engineer" -s applied
 
@@ -83,15 +83,15 @@ jobtrack stats
 
 # Remove an application
 jobtrack remove 3
-```
+\`\`\`
 
 ## Interactive UI
 
 For a full-screen dashboard instead of one-off commands:
 
-```bash
+\`\`\`bash
 jobtrack ui
-```
+\`\`\`
 
 - `↑` / `↓` — select a row
 - `a` — add a new application (guided form)
@@ -109,7 +109,7 @@ a Postgres trigger). See `src/db/schema.sql`.
 
 ## Project structure
 
-```
+\`\`\`
 src/
   cli.ts              entrypoint, wires commander to commands
   types.ts            shared types and the Stage enum
@@ -122,7 +122,7 @@ src/
     migrate.ts         migration runner
     applications.ts    data access layer
   test/                unit tests
-```
+\`\`\`
 
 ## Possible next steps
 
