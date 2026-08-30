@@ -5,6 +5,7 @@ import { listCommand } from "./commands/list.js";
 import { updateCommand } from "./commands/update.js";
 import { removeCommand } from "./commands/remove.js";
 import { statsCommand } from "./commands/stats.js";
+import { launchUi } from "./ui/index.js";
 import { closePool } from "./db/pool.js";
 import { STAGES } from "./types.js";
 
@@ -50,6 +51,11 @@ program
   .command("stats")
   .description("Show funnel stats across all applications")
   .action(statsCommand);
+
+program
+  .command("ui")
+  .description("Launch the interactive terminal UI")
+  .action(launchUi);
 
 async function main() {
   await program.parseAsync(process.argv);

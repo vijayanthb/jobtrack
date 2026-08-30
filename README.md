@@ -1,5 +1,7 @@
 # jobtrack
 
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)
+
 A small command-line tool for tracking job applications and interview stages,
 backed by Postgres. Built to actually use during my own job search, not just
 as a demo.
@@ -19,6 +21,7 @@ glance — without leaving the terminal.
 - `remove` — delete an application
 - `stats` — see counts and percentages across the funnel (applied →
   phone_screen → technical → onsite → offer / rejected / withdrawn)
+- `ui` — interactive terminal dashboard (arrow keys, live table, forms, stats view)
 
 ## Tech stack
 
@@ -26,6 +29,7 @@ glance — without leaving the terminal.
 - PostgreSQL (via `pg`)
 - `commander` for the CLI interface
 - `cli-table3` + `chalk` for terminal output
+- `ink` (React for CLIs) for the interactive terminal UI
 - Docker Compose for local Postgres
 
 ## Setup
@@ -81,6 +85,22 @@ jobtrack stats
 jobtrack remove 3
 ```
 
+## Interactive UI
+
+For a full-screen dashboard instead of one-off commands:
+
+```bash
+jobtrack ui
+```
+
+- `↑` / `↓` — select a row
+- `a` — add a new application (guided form)
+- `u` — update the selected application's stage
+- `d` — delete the selected application (with confirmation)
+- `s` — view funnel stats
+- `r` — refresh
+- `q` — quit
+
 ## Schema
 
 Single `applications` table: `id`, `company`, `role`, `stage`, `applied_date`,
@@ -93,19 +113,22 @@ a Postgres trigger). See `src/db/schema.sql`.
 src/
   cli.ts              entrypoint, wires commander to commands
   types.ts            shared types and the Stage enum
+  validate.ts          shared stage-validation helper
   commands/           one file per CLI command
+  ui/                  interactive terminal dashboard (Ink/React)
   db/
     pool.ts           pg connection pool
     schema.sql         table definition + trigger
     migrate.ts         migration runner
     applications.ts    data access layer
+  test/                unit tests
 ```
 
 ## Possible next steps
 
 - `jobtrack reminders` — surface applications with an upcoming `next_step_date`
 - CSV export
-- Interactive TUI mode
+- Local web dashboard (browser UI on top of the same Postgres data)
 - Swap `pg` for an interface that also supports SQLite, for zero-setup trials
 
 ## License
